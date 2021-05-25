@@ -1,28 +1,13 @@
+from board_class import Board
 import os
-
-
-class Board:
-
-	def __init__(self, width, height):
-		self.width = width
-		self.height = height
-		self.board = [['X'] * self.width] * self.height
-	
-	def print_board(self):
-		for i in range(self.width):
-			for j in range(self.height):
-				print(self.board[i][j], end=' ')
-			print('')
-		print('')
-
-	def update_board(self, pos_x, pos_y):
-		self.board[pos_x][pos_y] = 'w'
+from board_class import Board
+from functions import add_mines
 
 def main():	
-	mine_sweeper = Board(7, 7)
-	mine_sweeper.print_board()
-	mine_sweeper.update_board(4, 3)
-	mine_sweeper.print_board()
+    mine_sweeper = Board(7, 7)
+    mine_sweeper.print_board()
+    add_mines(12, mine_sweeper)
+    mine_sweeper.print_board()
 
 if __name__ == "__main__":
-	main()
+    main()
