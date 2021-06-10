@@ -6,11 +6,14 @@ class Board:
 
     # This function defines parameters when an instance of the class is created. Here we give it a width and height for the number of positions
     # Later on I will add logic to prevent it from exceeding the terminal window width and height
+    # board_mask is what the player will see, and board is used to store things like where the mines are and how many mines area around a given point
     def __init__(self, width, height):
         self.width = width
         self.height = height
-        self.board = [['X'] * self.width for _ in range(self.height)]
-    
+        self.board_mask = [['X'] * self.width for _ in range(self.height)]
+        self.board = [[0] * self.width for _ in range(self.height)]
+
+    # Just a handy helper function to print the board out when I need it
     def print_board(self):
         for i in range(self.width):
             for j in range(self.height):
@@ -18,9 +21,8 @@ class Board:
             print('')
         print('')
 
-    def update_board(self, pos_x, pos_y, char):
-        self.board[pos_x][pos_y] = char
-
+    # add_mines adds mines at a random positions across the board 
+    # Mines are red, even though in hindsight the player won't see the mines
     def add_mines(self, num_of_mines):
         mines_remaining = num_of_mines
         running = True
