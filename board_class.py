@@ -12,26 +12,49 @@ class Board:
         self.height = height
         self.board_mask = [['X'] * self.width for _ in range(self.height)]
         self.board = [[0] * self.width for _ in range(self.height)]
+        self.mine = "\033[91mM\033[0m"
 
     # Just a handy helper function to print the board out when I need it
     def print_board(self):
         for i in range(self.width):
             for j in range(self.height):
-                print(self.board[i][j], end=' ')
+                print(self.board[j][i], end=' ')
             print('')
         print('')
 
-    # add_mines adds mines at a random positions across the board 
+    # add_mines adds mines at a random positions across the board
     # Mines are red, even though in hindsight the player won't see the mines
     def add_mines(self, num_of_mines):
         mines_remaining = num_of_mines
         running = True
-        mine = "\033[91mM\033[0m"
         while running:
             for j in range(self.width):
                 for k in range(self.height):
                     if mines_remaining == 0:
                         running = False
-                    elif self.board[j][k] != mine and randint(1, self.width * self.height) == 1:
+                    elif self.board[k][j] != self.mine and randint(1, self.width * self.height) == 1:
                         mines_remaining -= 1
-                        self.board[j][k] = mine
+                        self.board[k][j] = self.mine
+
+    def is_mine(self, x_pos, y_pos):
+        try:
+            if x_pos < 0 or y_pos < 0:
+                return False
+
+            elif self.board[y_pos][x_pos] == self.mine:
+                return True
+
+            else:
+                return False
+        except IndexError:
+            return False
+
+    def configure_board(self, x_pos, y_pos):
+        if not self.is_mine(x_pos, y_pos):
+            surrounding_spaces = [[x_pos - 1, y_pos - 1], [x_pos, y_pos - 1], [x_pos + 1, y_pos - 1], [x_pos - 1, y_pos], [x_pos + 1, y_pos], [x_pos - 1, y_pos + 1], [x_pos, y_pos + 1], [x_pos + 1, y_pos + 1]]
+            mines_around = [False] * len(surrounding_spaces)
+            for i in range(8):
+                mines_around[i] = (self.is_mine(surrounding_spaces[i][0], surrounding_spaces[i][1]))
+            for j in range(len(mines_around)):
+                if mines_around[j] == True:
+                    self.board[y_pos][x_pos] += 1
