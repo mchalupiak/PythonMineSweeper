@@ -1,5 +1,6 @@
 from board_class import Board
 import os
+
 def main():
     width = int(os.get_terminal_size()[0] / 2)
     height = os.get_terminal_size()[1] - 2
