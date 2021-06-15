@@ -36,12 +36,12 @@ class Board:
                         mines_remaining -= 1
                         self.board[k][j] = self.mine
 
-    def is_mine(self, x_pos, y_pos):
+    def is_val(self, x_pos, y_pos, val):
         try:
             if x_pos < 0 or y_pos < 0:
                 return False
 
-            elif self.board[y_pos][x_pos] == self.mine:
+            elif self.board[y_pos][x_pos] == val:
                 return True
 
             else:
@@ -50,11 +50,11 @@ class Board:
             return False
 
     def configure_board(self, x_pos, y_pos):
-        if not self.is_mine(x_pos, y_pos):
+        if not self.is_val(x_pos, y_pos, self.mine):
             surrounding_spaces = [[x_pos - 1, y_pos - 1], [x_pos, y_pos - 1], [x_pos + 1, y_pos - 1], [x_pos - 1, y_pos], [x_pos + 1, y_pos], [x_pos - 1, y_pos + 1], [x_pos, y_pos + 1], [x_pos + 1, y_pos + 1]]
             mines_around = [False] * len(surrounding_spaces)
             for i in range(8):
-                mines_around[i] = (self.is_mine(surrounding_spaces[i][0], surrounding_spaces[i][1]))
+                mines_around[i] = (self.is_val(surrounding_spaces[i][0], surrounding_spaces[i][1], self.mine))
             for j in range(len(mines_around)):
                 if mines_around[j] == True:
                     self.board[y_pos][x_pos] += 1
