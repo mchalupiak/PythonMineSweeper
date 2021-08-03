@@ -13,9 +13,9 @@ def main():
             mine_sweeper.configure_board(j, i)
     mine_sweeper.print_board()
     while mine_sweeper.game_over == False:
-        x_pos = input("Enter an X coordinate: ")
-        y_pos = input("Enter a Y coordinate: ")
-        mine_sweeper.make_move(int(x_pos), int(y_pos))
+        user_input = input("What move would you like to make? ('move' to uncover a space, 'flag' to flag a space) ")
+        mine_sweeper.clear_screen()
+        mine_sweeper.make_move(user_input.lower())
         mine_sweeper.print_board()
 if __name__ == "__main__":
     main()
