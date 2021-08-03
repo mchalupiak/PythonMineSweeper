@@ -72,7 +72,7 @@ class Board:
        self.clear_screen()
 
        if user_input == "move":
-            self.board_mask[y_pos][x_pos] = self.board[y_pos][x_pos]
+            self.board_mask[y_pos][x_pos] = "\033[93m" + str(self.board[y_pos][x_pos]) + "\033[0m"
             if self.is_val(x_pos, y_pos, self.mine):
                 self.end_screen(False)
             self.num_of_open_spaces -= 1
